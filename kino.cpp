@@ -1,6 +1,9 @@
 #include<iostream>
 #include<stdlib.h>
 #include<stdio.h>
+#include <time.h>
+FILE * fp;
+
 
 using namespace std;
 
@@ -13,11 +16,39 @@ bool revisar(int v[], int x){
         return false;
 }
 
+void Fecha()
+{
+  time_t t;
+  struct tm *tm;
+  char fecha[100];
+  fp = fopen ("kino.txt", "w+");
+  t=time(NULL);
+  tm=localtime(&t);
+  strftime(fecha,100, "%Y-%m-%d", tm);
+  fprintf(fp,"%s ",fecha);
+  printf ("%s ",fecha);
+  fclose(fp);
+}
+
+void Hora()
+{
+
+time_t tiempo = time(0);
+struct tm *h = localtime(&tiempo);
+char hora[50];
+strftime(hora,50,"%H:%M",h);
+  fp = fopen ("kino.txt", "a");
+  fprintf(fp,"%s",hora);
+  printf("%s;",hora);
+  fclose(fp);
+}
+
+
 int main(){
 
     int V[15],B[15];
     int cont=0,aux,y;
- srand (time(NULL));
+    srand (time(NULL));
 
 
     while(cont<14){
@@ -40,9 +71,15 @@ int main(){
                 }
             }
         }
+        Fecha();
+        Hora();
+        fp = fopen ("kino.txt", "a");
+
   for(int i=0;i<14;i++){
-  cout<<V[i]<<endl;
+  fprintf(fp, ";%d", V[i]);
+  cout<<V[i]<<";";
   }
+  fclose(fp);
   return 0;
   }
 
