@@ -25,15 +25,10 @@ if(marca)
 
         if(!TempBuff.empty())
             {
-                cout << TempBuff[0] << endl;
-                //cout << TempBuff[3] << endl;
-                //cout << TempBuff[4] << endl;
-                //cout << TempBuff[5] <<" "<<TempBuff[6] <<" "<<TempBuff[7] << endl;
-                cout << TempBuff[8] << endl;
+                //cout << TempBuff[0] << endl; //ip
+                //cout << TempBuff[8] << endl; //estado
 
-                // cout <<TempBuff[9] << endl;
-                //cout << TempBuff[10] << endl;
-                //cout << TempBuff[11] << endl;
+
                 cant_estados.push_back(TempBuff[8]); //mete todos los estados en el vector cant_estados
 
             if(estados.empty())
@@ -57,31 +52,92 @@ if(marca)
             }
 
             split(TempBuff[3], *"[",  TempBuff, TotalVector);
-            //cout << TempBuff[1] << endl;
             split(TempBuff[1], *":",  TempBuff, TotalVector);
-            cout << TempBuff[0] << endl;
-            cout << "-----" << endl;
+           // cout << TempBuff[0] << endl; //fecha
+            //cout << "-----" << endl;
             }
         }
     }
 
     int ct=0;
 
-        for(int i=0;i<estados.size();i++)//imprime los estados
+    cout << "ESTADO" << "\t#\t" << "CANTIDAD" << endl;
+    cout << "------------------------" << endl;
+
+        for(int i=0;i<estados.size();i++)//imprime los estados y su cantidad
          {
             for(int k=0;k<cant_estados.size();k++)
                {
                 if(estados[i]==cant_estados[k])
                   {
-                    ct++;
+                    ct++; //lleva la cuenta de los estados
                   }
               }
             cout << estados[i] << " : " << ct << endl;
             ct = 0;
         }
 
+         cout << "------------------------" << endl;
+
         cout <<  "total de estados: " << cant_estados.size() << endl; //borrar despues
 }
+
+
+void csv(string ipp){ //void de prueba no terminado
+
+char asdf[1000];
+char asdf2[1000];
+ifstream archivo ("GeoLite2-City-Blocks-IPv4.csv"); //abre el archivo csv
+vector<string> ip;
+ip.push_back("216"); //a modo de prueba
+ip.push_back("107");
+ip.push_back("155");
+ip.push_back("114");
+
+    while(!archivo.eof()){
+        archivo.getline(asdf,1000);
+
+          vector<string> TempBuffo(0);
+          vector<string> TempBuff2(0);
+           int TotalVector2;
+            int TotalVector;
+            split(asdf, *"/",  TempBuffo, TotalVector); //quito la mascara de la ip
+
+            if(!TempBuffo.empty()){
+
+                split(TempBuffo[0], *".", TempBuff2, TotalVector2);
+                int Octeto3 = atoi(TempBuff2[2].c_str()); //pasa de string a entero el octeto 3 y 4
+                int Octeto4 = atoi(TempBuff2[3].c_str());
+
+                if(TempBuff2[0]== ip[0] && TempBuff2[1]== ip[1]) //compara los octetos con la ip recibida
+                    {
+                        if(Octeto3 == 155)
+                            {
+                                if(Octeto4 <= 114)
+                                {
+                                cout << TempBuffo[0] << endl;
+                                }
+                            }
+                        else
+                        {
+                                if(151 <= Octeto3 && Octeto3 <= 155) //-3
+                            {
+                                if( 111 <= Octeto4 && Octeto4 <= 114)
+                                cout << TempBuffo[0] << endl;
+                            }
+
+                        }
+                    }
+
+            }
+    }
+    archivo.close();
+
+}
+
+
+
+
 
 int main(int argc, char *argv[])
 {
@@ -112,7 +168,7 @@ int main(int argc, char *argv[])
     if(entrada == 0)
     {
         cout<<"\nOpcion no valida, ejecute nuevamente el programa\n";
-        // getch();
+
         return 0;
     }
     else if(entrada == 1) //OPCION -g
@@ -120,13 +176,13 @@ int main(int argc, char *argv[])
         if(compara(argv[2],argv[3])>0) cout<<"la fecha de termino es mayor a la de inicio"<<endl;
         else Implementacion(caracteres,inicio,fin,fe,cant_estados,estados);
 
-        //cout<<"OPCION -g: SORTEO"<<endl;
+
     }
     else if(entrada == 2) //OPCION -g
     {
         if(compara(argv[2],argv[3])>0) cout<<"la fecha de termino es mayor a la de inicio"<<endl;
         else Implementacion(caracteres,inicio,fin,fe,cant_estados,estados);
-        //cout<<"OPCION -g: SORTEO"<<endl;
+
     }
     else if(entrada == 3) //OPCION -v
     {
@@ -141,7 +197,7 @@ int main(int argc, char *argv[])
     else
     {
         printf("\nOpcion no valida, ejecute nuevamente el programa\n");
-        //getch();
+
         return EXIT_SUCCESS;
     }
 }
