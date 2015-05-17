@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,6 +7,7 @@
 
 using namespace std;
 char tablero[T][T];
+
 void inicio()
 {
     cout<<"\t================\n";
@@ -23,30 +25,17 @@ bool direc(char d)
 char cambioN (int i)
 {
     char letras[] = {'A','B','C','D','E','F','G','H','I','J'};
-    if(i==1) return letras[0];
-    else if(i==2) return letras[1];
-    else if(i==3) return letras[2];
-    else if(i==4) return letras[3];
-    else if(i==5) return letras[4];
-    else if(i==6) return letras[5];
-    else if(i==7) return letras[6];
-    else if(i==8) return letras[7];
-    else if(i==9) return letras[8];
-    else if(i==10) return letras[9];
+    return letras[i-1];
 }
-int cambioL (char i)
+int cambioL (char j)
 {
     int numeros[] = {1,2,3,4,5,6,7,8,9,10};
-    if(i=='A') return numeros[0];
-    else if(i=='B') return numeros[1];
-    else if(i=='C') return numeros[2];
-    else if(i=='D') return numeros[3];
-    else if(i=='E') return numeros[4];
-    else if(i=='F') return numeros[5];
-    else if(i=='G') return numeros[6];
-    else if(i=='H') return numeros[7];
-    else if(i=='I') return numeros[8];
-    else if(i=='J') return numeros[9];
+    char letras[] = {'A','B','C','D','E','F','G','H','I','J'};
+    for(int i=0;i<10;i++)
+    {
+        if(j==letras[i])
+            return numeros[i];
+    }
 }
 void moverFichaRival(int i, int j,bool iz)
 {
