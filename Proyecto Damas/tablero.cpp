@@ -3,75 +3,75 @@
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
-#define T 10
+#define T 10 //tamaño maximo del tablero
 
 using namespace std;
-char tablero[T][T];
-bool tab[T][T];
+char tablero[T][T];//tablero de piezas
+bool tab[T][T];//tablero de limites
 
-void inicio()
+void inicio()// encabezado visual del programa
 {
     cout<<"\t================\n";
     cout<<"\tTABLERO DE DAMAS\n";
     cout<<"\t================\n";
     cout<<endl;
 }
-bool puedeMover(int i, int j)
+bool puedeMover(int i, int j) //comprueba que la ficha X,Y puede lograr desplazarse
 {
-   if(tablero[i-1][j-1]=='+' ||tablero[i-1][j+1]=='+')
+   if(tablero[i-1][j-1]=='+' ||tablero[i-1][j+1]=='+')//puede mover las Blancas
    {
        return true;
    }
    else 
    {
-       if(tablero[i+1][j-1]=='+' ||tablero[i+1][j+1]=='+')
+       if(tablero[i+1][j-1]=='+' ||tablero[i+1][j+1]=='+')//puede mover las Negras
        {
            return true;
        }
-       else
+       else//no puede mover ni Blancas ni Negras
        {
            return false;
        }      
    }  
 }
-bool puedeComer(int i, int j)
+bool puedeComer(int i, int j)//comprueba que la ficha X,Y puede capturar alguna ficha rival
 {
    if((tablero[i-1][j-1]=='N'&& tablero[i-2][j-2]=='+') || (tablero[i-1][j+1]=='N' && tablero[i-1][j+1]=='+'))
-   {
+   {//puede comer las Blancas
        return true;
    }
    else 
    {   
        if((tablero[i+1][j-1]=='B'&& tablero[i+2][j-2]=='+')||( tablero[i+1][j+1]=='B' && tablero[i+2][j+2]=='+'))
-       {
+       {//puede comer las Negras
            return true;
        }
-       else
+       else//no puede comer ni Blancas ni Negras
        {
            return false;
        }
    }
 }
 
-void crearlimite()
+void crearlimite()//comprueba que no salga del tablero establecido
 {
     for(int i=0;i<T;i++){
         for(int j=0;j<T;j++){
             tab[i][j]=true;}}
 }
-bool direc(char d)
+bool direc(char d)//determina la dirección de movimiento de ficha
 {
   if(d=='i')return true;
   else if(d=='d')return false;
 }
 
-char cambioN (int i)
-{
+char cambioN (int i)//cambia el numero de la posición por una letra
+{//ubicacion grafica del tablero
     char letras[] = {'A','B','C','D','E','F','G','H','I','J'};
     return letras[i-1];
 }
-int cambioL (char j)
-{
+int cambioL (char j)//cambia letra de posición por un numero
+{//utilización de letras para trabajar
     int numeros[] = {1,2,3,4,5,6,7,8,9,10};
     char letras[] = {'A','B','C','D','E','F','G','H','I','J'};
     for(int i=0;i<10;i++)
@@ -81,21 +81,21 @@ int cambioL (char j)
     }
 }
 
-bool siMueveN(int i, int j,bool iz)
+bool siMueveN(int i, int j,bool iz)//determina direccion de movimiento de Negra
 {
-    if(iz==true)
+    if(iz==true)//puede desplazar Negra hacia la izquierda
     {
        if(tablero[i+1][j-1]=='+' && tab[i+1][j-1]==true)return true;
     }
-    else if(iz==false)
+    else if(iz==false)//puede desplazar Negra hacia la derecha
     {
         if(tablero[i+1][j+1]=='+'&& tab[i+1][j+1]==true)return false;
     }
 }
 
-bool siComeN(int i, int j,bool iz)
+bool siComeN(int i, int j,bool iz)//determina la dirección de captura de Negra
 {
-    if(iz==true)
+    if(iz==true)//puede capturar Negra hacia la izquierda
     {
        if(tablero[i+1][j-1]=='B' && tab[i+1][j-1]==true)
        {
@@ -103,7 +103,7 @@ bool siComeN(int i, int j,bool iz)
            cout<<"puede comer por izquierda"<<endl;
        }
     }
-    else if(iz==false)
+    else if(iz==false)//puede capturar Negra hacia la derecha
     {
         if(tablero[i+1][j+1]=='B'&& tab[i+1][j+1]==true)
         {
@@ -113,23 +113,23 @@ bool siComeN(int i, int j,bool iz)
     }
 }
 
-bool siMueveB(int i, int j,bool iz)
+bool siMueveB(int i, int j,bool iz)//determina direccion de movimiento de Blanca
 {
-    if(iz==true)
+    if(iz==true)//puede desplazar Blanca hacia la izquierda
     {
        if(tablero[i-1][j-1]=='+' && tab[i-1][j-1]==true)return true;
        cout<<"puede mover por izquierda"<<endl;
     }
-    else if(iz==false)
+    else if(iz==false)//puede desplazar Blanca hacia la derecha
     {
         if(tablero[i-1][j+1]=='+'&& tab[i-1][j+1]==true)return false;
         cout<<"puede mover por derecha"<<endl;
     }
 }
 
-bool siComeB(int i, int j,bool iz)
+bool siComeB(int i, int j,bool iz)//determina la dirección de captura de Blanca
 {
-    if(iz==true)
+    if(iz==true)//puede capturar Blanca hacia la izquierda
     {
        if(tablero[i-1][j-1]=='N' && tab[i-1][j-1]==true)
        {
@@ -137,7 +137,7 @@ bool siComeB(int i, int j,bool iz)
            cout<<"puede comer por izquierda"<<endl;
        }    
     }
-    else if(iz==false)
+    else if(iz==false)//puede capturar Blanca hacia la derecha
     {
         if(tablero[i-1][j+1]=='N'&& tab[i-1][j+1]==true)
         {
@@ -148,12 +148,12 @@ bool siComeB(int i, int j,bool iz)
     }
 }
 
-void moverNegra(int i, int j,bool iz)
+void moverNegra(int i, int j,bool iz)//Accion de movimiento Negra
 {
     char aux;
     cout<<endl;
     cout<<endl;
-    if(siMueveN(i,j,iz))
+    if(siMueveN(i,j,iz))//si puede mover Negra hacia la izquierda
     {
         //moviemiento por izquierda
         if(tablero[i][j]=='N' && tablero[i+1][j-1]=='+')
@@ -167,7 +167,7 @@ void moverNegra(int i, int j,bool iz)
             cout<<"No se puede cambiar tal ficha"<<endl;
         }     
     }
-    else if(!siMueveN(i,j,iz))
+    else if(!siMueveN(i,j,iz))//si puede mover Negra hacia la derecha
     {
         //moviemiento por derecha
         if(tablero[i][j]=='N' && tablero[i+1][j+1]=='+')
@@ -182,14 +182,14 @@ void moverNegra(int i, int j,bool iz)
         }
     }
 }
-void comerNegra(int i, int j,bool iz)
+void comerNegra(int i, int j,bool iz)//Accion de captura Negra
 {
     char aux;
     cout<<endl;
     cout<<endl;
-    if(siComeN(i,j,iz))
+    if(siComeN(i,j,iz))//si puede capturar Negra hacia la izquierda
     {
-        //moviemiento por izquierda
+        //captura por izquierda
         if(tablero[i][j]=='N' && tablero[i+1][j-1]=='B' && tablero[i+2][j-2]=='+')
         {
              aux='N';
@@ -202,9 +202,9 @@ void comerNegra(int i, int j,bool iz)
             cout<<"No se puede comer tal ficha"<<endl;
         }
     }
-    else if(!siComeN(i,j,iz))
+    else if(!siComeN(i,j,iz))//si puede capturar Negra hacia la derecha
     {
-        //moviemiento por derecha
+        //captura por derecha
         if(tablero[i][j]=='N' && tablero[i+1][j+1]=='B' && tablero[i+2][j+2]=='+')
         {
             aux='N';
@@ -219,12 +219,12 @@ void comerNegra(int i, int j,bool iz)
     }
 }
 
-void moverBlanca(int i, int j,bool iz)
+void moverBlanca(int i, int j,bool iz)//Accion de movimiento Blanca
 {
     char aux;
     cout<<endl;
     cout<<endl;
-    if(siMueveB(i,j,iz))
+    if(siMueveB(i,j,iz))//si puede mover Blanca hacia la izquierda
     {
         //moviemiento por izquierda
         if(tablero[i][j]=='B' && tablero[i-1][j-1]=='+')
@@ -238,7 +238,7 @@ void moverBlanca(int i, int j,bool iz)
             cout<<"No se puede cambiar tal ficha"<<endl;
         }
     }
-    else if(!siMueveB(i,j,iz))
+    else if(!siMueveB(i,j,iz))//si puede mover Blanca hacia la derecha
     {
         //moviemiento por derecha
          if(tablero[i][j]=='B'&& tablero[i-1][j+1]=='+')
@@ -254,12 +254,12 @@ void moverBlanca(int i, int j,bool iz)
     }
 }
 
-void comerBlanca(int i, int j,bool iz)
+void comerBlanca(int i, int j,bool iz)//Accion de captura Blanca
 {
     char aux;
     cout<<endl;
     cout<<endl;
-    if(siComeB(i,j,iz))
+    if(siComeB(i,j,iz))//si puede capturar Blanca hacia la izquierda
     {
         //moviemiento por izquierda
         if(tablero[i][j]=='B' && tablero[i-1][j-1]=='N'&& tablero[i-2][j-2]=='+')
@@ -274,7 +274,7 @@ void comerBlanca(int i, int j,bool iz)
             cout<<"No se puede cambiar tal ficha"<<endl;
         }     
     }
-    else if(!siComeB(i,j,iz))
+    else if(!siComeB(i,j,iz))//si puede capturar Blanca hacia la derecha
     {
         //moviemiento por derecha
          if(tablero[i][j]=='B'&& tablero[i-1][j+1]=='N'&& tablero[i-2][j+2]=='+')
@@ -291,85 +291,84 @@ void comerBlanca(int i, int j,bool iz)
     }
 }
 
-void llenar(){
-
-	for(int i = 0; i < T; i++)
-	        for(int j = 0; j < T; j++)
-		{
-			if (i < 3 && ((i + j) % 2 == 0))
-				tablero[i][j] = 'N';
-			else
+void llenar(){//Crear el tablero de Damas
+    for(int i = 0; i < T; i++)
+            for(int j = 0; j < T; j++)
+            {
+                if (i < 3 && ((i + j) % 2 == 0))
+                        tablero[i][j] = 'N';
+                else
                 if((i==3||i==4||i==5||i==6) && ((i + j) % 2 == 0))
                    tablero[i][j] = '+';
-            else
-				if ((i > 6) && ((i + j) % 2 == 0))
-					tablero[i][j] = 'B';
-				else
-					tablero[i][j] = '-' ;
-		}
+                else
+                if ((i > 6) && ((i + j) % 2 == 0))
+                        tablero[i][j] = 'B';
+                else
+                        tablero[i][j] = '-' ;
+            }
 }
 
-void imprimir(){
+void imprimir(){//Muestra el pantalla el Tablero de Damas
     system("clear");
     inicio();
-	for(int i = 0; i < T; i++)
+    for(int i = 0; i < T; i++)
     {
-		if (i == 0)
-		{
-		    cout<<"  ";
-			for (int k = 0; k < T; k++)
-			cout<<" "<<cambioN(k+1)<<"  ";
-			cout<<endl;
-			cout<<endl;
-		}
-                cout<<i+1;
-        	for(int j = 0; j < T; j++)
-        	{
-                	cout<<"  "<<tablero[i][j]<<" ";
-          	}
-          	cout<<endl;
-          	cout<<endl;
-    	}
+        if (i == 0)
+        {
+            cout<<"  ";
+                for (int k = 0; k < T; k++)
+                cout<<" "<<cambioN(k+1)<<"  ";
+                cout<<endl;
+                cout<<endl;
+        }
+        cout<<i+1;
+        for(int j = 0; j < T; j++)
+        {
+                cout<<"  "<<tablero[i][j]<<" ";
+        }
+        cout<<endl;
+        cout<<endl;
+    }
 }
 
 
 int main(){
-        int i,j; 
-        char jota,direccion; 
-        bool dir;
-        crearlimite();
-        llenar();
-    	imprimir();
-        while(true){
+        int i; //direccion de filas por numeros
+        char jota;//direccion de columnas por letras
+        char direccion; //'i' o 'd'
+        bool dir;//si 'i' retorna true y 'd' retorna false
+        crearlimite();//determina el limite del tablero
+        llenar();//llena las fichas y cuadros de desplazamiento
+    	imprimir();//imprime el tablero
+        while(true){//ciclo infinito, falta darle condicion de termino
         cout<<"ingrese posicion que desea mover y direccion de Blancos"<<endl;
     	cin>>jota>>i>>direccion;
-    	dir=direc(direccion);
-        
-        if(puedeComer(i-1,cambioL(jota)-1))
+    	dir=direc(direccion);//determina direccion con booleano
+        if(puedeComer(i-1,cambioL(jota)-1))//prioridad de capturar por sobre desplazar
         {
-            if(siComeB(i-1,cambioL(jota)-1,dir))
+            if(siComeB(i-1,cambioL(jota)-1,dir))//comprobar si puede capturar por izquierda
             {
-               comerBlanca(i-1,cambioL(jota)-1,dir);
+               comerBlanca(i-1,cambioL(jota)-1,dir);//captura por izquierda
                imprimir();
             }
-            else
+            else//determina captura por derecha
             {
-               comerBlanca(i-1,cambioL(jota)-1,dir);
+               comerBlanca(i-1,cambioL(jota)-1,dir);//captura por derecha
                imprimir();
             }
         }
-        else
+        else//si no puede capturar, entonces debe moverse
         {
-            if(puedeMover(i-1,cambioL(jota)-1))
+            if(puedeMover(i-1,cambioL(jota)-1))//comprueba si puede mover
             {
-                if(siMueveB(i-1,cambioL(jota)-1,dir))
+                if(siMueveB(i-1,cambioL(jota)-1,dir))//comprobar si puede mover por izquierda
                 {
-                   moverBlanca(i-1,cambioL(jota)-1,dir);
+                   moverBlanca(i-1,cambioL(jota)-1,dir);//mueve por izquierda
                    imprimir();
                 }
-                else
+                else//determina movida por derecha
                 {
-                   moverBlanca(i-1,cambioL(jota)-1,dir);
+                   moverBlanca(i-1,cambioL(jota)-1,dir);//mueve por derecha
                    imprimir();
                 }   
             }     
@@ -377,36 +376,36 @@ int main(){
         
         cout<<"ingrese posicion que desea mover y direccion de Negros"<<endl;
     	cin>>jota>>i>>direccion;
-    	dir=direc(direccion);
-        if(puedeComer(i-1,cambioL(jota)-1))
+        dir=direc(direccion);//determina direccion con booleano
+        if(puedeComer(i-1,cambioL(jota)-1))//prioridad de capturar por sobre desplazar
         {
-            if(!siComeN(i-1,cambioL(jota)-1,dir))
+            if(siComeN(i-1,cambioL(jota)-1,dir))//comprobar si puede capturar por izquierda
             {
-               comerNegra(i-1,cambioL(jota)-1,dir);
+               comerNegra(i-1,cambioL(jota)-1,dir);//captura por izquierda
                imprimir();
             }
-            else
+            else//determina captura por derecha
             {
-               comerNegra(i-1,cambioL(jota)-1,dir);
+               comerNegra(i-1,cambioL(jota)-1,dir);//captura por derecha
                imprimir();
             }
         }
-        else
+        else//si no puede capturar, entonces debe moverse
         {
-            if(puedeMover(i-1,cambioL(jota)-1))
+            if(puedeMover(i-1,cambioL(jota)-1))//comprueba si puede mover
             {
-                if(!siMueveN(i-1,cambioL(jota)-1,dir))
+                if(siMueveN(i-1,cambioL(jota)-1,dir))//comprobar si puede mover por izquierda
                 {
-                   moverNegra(i-1,cambioL(jota)-1,dir);
+                   moverNegra(i-1,cambioL(jota)-1,dir);//mueve por izquierda
                    imprimir();
                 }
-                else
+                else//determina movida por derecha
                 {
-                   moverNegra(i-1,cambioL(jota)-1,dir);
+                   moverNegra(i-1,cambioL(jota)-1,dir);//mueve por derecha
                    imprimir();
                 }   
             }     
-        } 
-    } 
+        }
+    }        
 	return 0;
 }
