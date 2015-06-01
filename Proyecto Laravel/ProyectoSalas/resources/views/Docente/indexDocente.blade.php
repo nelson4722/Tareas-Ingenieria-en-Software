@@ -16,7 +16,7 @@ Gestión de salas - UTEM
                         <div class="panel-heading">
                             
 
-                            <h2><b>Bienvenido Docente </b><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></h2> 
+                            <h2><i class="glyphicon glyphicon-lock" aria-hidden="true"></i><b> Bienvenido Docente </b></h2> 
 
                         </div>
                         <div class="panel-body">                  
@@ -28,11 +28,10 @@ Gestión de salas - UTEM
                     <ul class="nav" id="side-menu">
                     
                         <li>
-                      <a class="list-group-item active">Menú Docente <i class="glyphicon glyphicon-option-vertical" aria-hidden="true"></i>
-  </a>
+                       <a class="list-group-item active"><i class="glyphicon glyphicon-list" aria-hidden="true"></i> Menú Docente</a>
 </li>
-            <li> <a href="">Horario</a></li>
-            <li><a href="">Consultar</a></li>            
+            <li> <a href="{{URL::to('/Docente/HorarioDocente')}}">Horario</a></li>
+            <li><a href="{{URL::to('/Docente/consultaDocente')}}">Consultar</a></li>            
 
 </li>
 

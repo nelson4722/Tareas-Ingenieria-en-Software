@@ -15,7 +15,7 @@ Gestión de salas - UTEM
                         <div class="panel-heading">
                             
 
-                            <h2><b>Bienvenido Encargado </b><i class="glyphicon glyphicon-edit" aria-hidden="true"></i></h2> 
+                            <h2><i class="glyphicon glyphicon-edit" aria-hidden="true"></i><b> Bienvenido Encargado </b></h2> 
 
                         </div>
                         <div class="panel-body">                  
@@ -27,11 +27,11 @@ Gestión de salas - UTEM
                     <ul class="nav" id="side-menu">
                     
                         <li>
-                      <a class="list-group-item active">Menú Encargado<i class="glyphicon glyphicon-option-vertical" aria-hidden="true"></i>
-  </a>
+                       <a class="list-group-item active"><i class="glyphicon glyphicon-list" aria-hidden="true"></i> Menú Encargado</a>
 </li>
             <li> <a href="">Asignar Salas</a></li>
-            <li><a href="">Algo</a></li>            
+            <li><a href="">Modificar Salas</a></li> 
+            <li><a href="">Ingresar Datos</a></li>             
 
 </li>
 
@@ -48,8 +48,8 @@ Gestión de salas - UTEM
 <div class="panel-body">
   <div class="form-group">
   <div class="jumbotron">
-      <h2>Aca va el horario con las salas y weas</h2>
-      <p>XDDDDD</p>
+      <h2>Aca van las opciones</h2>
+      <p>1111</p>
      
     </div>
   </div>

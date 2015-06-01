@@ -16,7 +16,7 @@
                         <div class="panel-heading">
                             
 
-                            <h2><b>Bienvenido Administrador </b><i class="glyphicon glyphicon-user" aria-hidden="true"></i></h2> 
+                            <h2><i class="glyphicon glyphicon-user" aria-hidden="true"></i><b> Bienvenido Administrador </b></h2> 
 
                         </div>
                         <div class="panel-body">                  
@@ -28,13 +28,11 @@
                     <ul class="nav" id="side-menu">
                     
                         <li>
-                      <a class="list-group-item active">Menú de Administración <i class="glyphicon glyphicon-option-vertical" aria-hidden="true"></i>
-  </a>
+                      <a class="list-group-item active"><i class="glyphicon glyphicon-list" aria-hidden="true"></i> Menú Administrador</a>
 </li>
             <li> <a href="">Crear Campus</a></li>
             <li><a href="">Modificar Campus</a></li>
             <li><a href="">Archivar Campus</a></li>
-            <li><a href="">Asignar Encargado</a></li>
             <li><a href="">Asignar Perfil</a></li>               
 
        
@@ -53,8 +51,8 @@
 <div class="panel-body">
   <div class="form-group">
   <div class="jumbotron">
-      <h2>Aca va el horario con las salas y weas</h2>
-      <p>XDDDDD</p>
+      <h2>Aca van las opciones</h2>
+      <p>11111</p>
      
     </div>
   </div>

@@ -19,7 +19,15 @@ Route::get('Administrador', 'AdministradorController@getIndex');
 
 Route::get('Alumno','AlumnoController@getIndex');
 
+Route::get('Alumno/Horario','HorarioController@getHorario');
+
+Route::get('Alumno/consultaAlumno','ConsultaController@getconsultaAlumno');
+
 Route::get('Docente','DocenteController@getIndex');
+
+Route::get('Docente/HorarioDocente','HorarioController@getHorarioDocente');
+
+Route::get('Docente/consultaDocente','ConsultaController@getconsultaDocente');
 
 Route::get('Encargado','EncargadoController@getIndex');
 

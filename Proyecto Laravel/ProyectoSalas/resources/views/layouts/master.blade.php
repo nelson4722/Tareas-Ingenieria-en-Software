@@ -12,7 +12,7 @@
     <title>@yield('title','Sistema de Salas :: Universidad Tecnológica Metropolitana')</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
@@ -30,7 +30,8 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">@yield('welcome','BIENVENIDO A GESTION DE SALAS UTEM')</a>
+         <a class="navbar-brand" href="#">@yield('welcome','BIENVENIDO A GESTION DE SALAS UTEM')</a>
+
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
