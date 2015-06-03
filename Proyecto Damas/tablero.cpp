@@ -243,7 +243,7 @@ void moverNegra(int i, int j,bool iz, int N)//Accion de movimiento Negra
         {
             aux='n';
             tablero[i][j]='+';
-            tablero[i+N][i+N]=aux;
+            tablero[i+N][j+N]=aux;
         }
         else
         {
