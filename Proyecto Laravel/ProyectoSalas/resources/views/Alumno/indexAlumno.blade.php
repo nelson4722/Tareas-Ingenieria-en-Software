@@ -1,5 +1,6 @@
 @extends('layouts/master')
 
+
 @section('welcome')
 
 Gestión de salas - UTEM

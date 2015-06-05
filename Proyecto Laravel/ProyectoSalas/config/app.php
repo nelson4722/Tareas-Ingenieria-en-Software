@@ -137,6 +137,14 @@ return [
 		'Illuminate\View\ViewServiceProvider',
 
 		/*
+		*Agregado
+		*/
+
+		'Collective\Html\HtmlServiceProvider',
+
+
+
+		/*
 		 * Application Service Providers...
 		 */
 		'App\Providers\AppServiceProvider',
@@ -192,6 +200,11 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
+
+			/*AGREGADO*/
+
+		'Form' => 'Collective\Html\FormFacade',
+        'Html' => 'Collective\Html\HtmlFacade',
 
 	],
 
