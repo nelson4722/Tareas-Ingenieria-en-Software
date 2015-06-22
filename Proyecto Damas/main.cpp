@@ -10,15 +10,13 @@
 using namespace std;
 char tablero[T][T];//tablero de piezas
 bool tab[T][T];//tablero de limites
-int N;
-int CN=0;
-int CB=0;
+int N;// cantidad de piezas a mover la coronada
+int CN=0;// contador de Negras capturadas
+int CB=0;// contador de Blancas capturadas
 FILE * fp;
-int iaux=0;
-int jaux=0;
-bool puedeCoronarN(int i, int j)
+bool puedeCoronarN(int i, int j//determina si la pieza Negra se puede coronar
 {
-    if(i==9)
+    if(i==9)// determina si cruzó al otro extremo la pieza Negra
     {
         if(tablero[i][j]=='n')
         {
@@ -34,7 +32,7 @@ bool puedeCoronarN(int i, int j)
         return false;
     }
 }
-bool esCoronaN(int i, int j)
+bool esCoronaN(int i, int j)//determina si la pieza Negra es corona
 {
     if(tablero[i][j]=='N')
     {
@@ -45,7 +43,7 @@ bool esCoronaN(int i, int j)
         return false;
     }
 }
-void CoronarN(int i, int j)
+void CoronarN(int i, int j)// cambia la pieza Negra por una corona a traves de una mayuscula
 {
     if(puedeCoronarN(i,j)==true)
     {
@@ -53,9 +51,9 @@ void CoronarN(int i, int j)
     }
 }
 
-bool puedeCoronarB(int i, int j)
+bool puedeCoronarB(int i, int j)//determina si la pieza Blanca se puede coronar
 {
-    if(i==0)
+    if(i==0)// determina si cruzó al otro extremo la pieza Blanca
     {
         if(tablero[i][j]=='b')
         {
@@ -71,7 +69,7 @@ bool puedeCoronarB(int i, int j)
         return false;
     }
 }
-bool esCoronaB(int i, int j)
+bool esCoronaB(int i, int j)//determina si la pieza Blanca es corona
 {
     if(tablero[i][j]=='B')
     {
@@ -82,7 +80,7 @@ bool esCoronaB(int i, int j)
         return false;
     }
 }
-void CoronarB(int i, int j)
+void CoronarB(int i, int j)// cambia la pieza Blanca por una corona a traves de una mayuscula
 {
     if(puedeCoronarB(i,j)==true)
     {
@@ -98,24 +96,24 @@ void inicio()// encabezado visual del programa
 }
 bool puedeMoverB(int i, int j,int N, bool corona) //comprueba que la ficha X,Y puede lograr desplazarse
 {
-   if(corona==false)
+   if(corona==false)//si no es corona, N=1
    {
-       if(tablero[i-N][j-N]=='+'||tablero[i-N][j+N]=='+')//puede mover las Blancas
+       if(tablero[i-N][j-N]=='+'||tablero[i-N][j+N]=='+')//puede mover las fichas Blancas
        {
            return true;
        }
-       else //no puede mover Blancas
+       else //no puede mover fichas Blancas
        {
            return false;
        }
    }
    else
    {
-       if(tablero[i-N][j-N]=='+'||tablero[i-N][j+N]=='+'|| tablero[i+N][j-N]=='+'||tablero[i+N][j+N]=='+')//puede mover las Blancas
+       if(tablero[i-N][j-N]=='+'||tablero[i-N][j+N]=='+'|| tablero[i+N][j-N]=='+'||tablero[i+N][j+N]=='+')//puede mover las coronas Blancas
        {
            return true;
        }
-       else //no puede mover Blancas
+       else //no puede mover coronas Blancas
        {
            return false;
        }
@@ -123,24 +121,24 @@ bool puedeMoverB(int i, int j,int N, bool corona) //comprueba que la ficha X,Y p
 }
 bool puedeMoverN(int i, int j,int N, bool corona) //comprueba que la ficha X,Y puede lograr desplazarse
 {
-   if(corona==false)
+   if(corona==false)// si no es corona N=1
    {
-       if(tablero[i+N][j-N]=='+' ||tablero[i+N][j+N]=='+')//puede mover las Negras
+       if(tablero[i+N][j-N]=='+' ||tablero[i+N][j+N]=='+')//puede mover las fichas Negras
        {
            return true;
        }
-       else//no puede mover Negras
+       else//no puede mover fichas Negras
        {
            return false;
        }
    }
    else
    {
-       if(tablero[i+N][j-N]=='+'||tablero[i+N][j+N]=='+'|| tablero[i-N][j+N]=='+' ||tablero[i-N][j-N]=='+')//puede mover las Negras
+       if(tablero[i+N][j-N]=='+'||tablero[i+N][j+N]=='+'|| tablero[i-N][j+N]=='+' ||tablero[i-N][j-N]=='+')//puede mover las coronas Negras
        {
            return true;
        }
-       else//no puede mover Negras
+       else//no puede mover coronas Negras
        {
            return false;
        }
@@ -152,10 +150,10 @@ bool puedeComerN(int i, int j, int N, bool corona)//comprueba que la ficha X,Y p
     if(corona==false)
     {
        if(((tablero[i+N][j-N]=='b' || tablero[i+N][j-N]=='B') &&tablero[i+(N+1)][j-(N+1)]=='+')||((tablero[i+N][j+N]=='b' || tablero[i+N][j+N]=='B')&&tablero[i+(N+1)][j+(N+1)]=='+'))
-       {//puede comer las Negras
+       {//puede comer a las fichas Blancas
            return true;
        }
-       else//no puede comer ni Blancas ni Negras
+       else
        {
            return false;
        }
@@ -166,10 +164,10 @@ bool puedeComerN(int i, int j, int N, bool corona)//comprueba que la ficha X,Y p
         ||(tablero[i-N][j-N]=='b'&&tablero[i-(N+1)][j-(N+1)]=='+')||(tablero[i-N][j+N]=='b'&&tablero[i-(N+1)][j+(N+1)]=='+')
         ||(tablero[i+N][j-N]=='B'&&tablero[i+(N+1)][j-(N+1)]=='+')||(tablero[i+N][j+N]=='B'&&tablero[i+(N+1)][j+(N+1)]=='+')
         ||(tablero[i-N][j-N]=='B'&&tablero[i-(N+1)][j-(N+1)]=='+')||(tablero[i-N][j+N]=='B'&&tablero[i-(N+1)][j+(N+1)]=='+'))
-       {//puede comer las Negras
+       {//puede comer a las fichas Blancas ya sea corona o ficha
            return true;
        }
-       else//no puede comer ni Blancas ni Negras
+       else
        {
            return false;
        }
@@ -180,10 +178,10 @@ bool puedeComerB(int i, int j, int N, bool corona)//comprueba que la ficha X,Y p
     if(corona==false)
     {
        if(((tablero[i-N][j-N]=='n'|| tablero[i-N][j-N]=='N')&& tablero[i-(N+1)][j-(N+1)]=='+') || ((tablero[i-N][j+N]=='n'|| tablero[i-N][j+N]=='N') && tablero[i-(N+1)][j+(N+1)]=='+'))
-       {//puede comer las Blancas
+       {//puede comer a las fichas Negras
            return true;
        }
-       else//no puede comer ni Blancas ni Negras
+       else
        {
            return false;
        }
@@ -195,10 +193,10 @@ bool puedeComerB(int i, int j, int N, bool corona)//comprueba que la ficha X,Y p
         ||((tablero[i-N][j-N]=='n'&&tablero[i-(N+1)][j-(N+1)]=='+')||(tablero[i-N][j+N]=='n'&&tablero[i-(N+1)][j+(N+1)]=='+'))
         ||((tablero[i+N][j-N]=='N'&&tablero[i+(N+1)][j-(N+1)]=='+')||(tablero[i+N][j+N]=='N'&&tablero[i+(N+1)][j+(N+1)]=='+'))
         ||((tablero[i-N][j-N]=='N'&&tablero[i-(N+1)][j-(N+1)]=='+')||(tablero[i-N][j+N]=='N'&&tablero[i-(N+1)][j+(N+1)]=='+')))
-       {//puede comer las Negras
+       {//puede comer a las Negras ya sea corona o ficha
            return true;
        }
-       else//no puede comer ni Blancas ni Negras
+       else
        {
            return false;
        }
@@ -266,6 +264,10 @@ int siMueveN(int i, int j,bool iz,int N,bool corona, bool ab)//determina direcci
     }
     else
     {
+
+    /* FALTA TODO ESTO POR CORREGIR!
+
+
         if(iz==true && ab== true)//puede desplazar Negra hacia la izquierda abajo
         {
            if(tablero[i+N][j-N]=='+' && tab[i+N][j-N]==true)return 3;
@@ -282,6 +284,7 @@ int siMueveN(int i, int j,bool iz,int N,bool corona, bool ab)//determina direcci
         {
             if(tablero[i-N][j+N]=='+'&& tab[i-N][j+N]==true)return 6;
         }
+        */
     }
 }
 
@@ -318,6 +321,9 @@ int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la direc
     }
     else
     {
+       /* FALTA ESTO POR CORREGIR
+
+
         if(iz==true)//puede capturar Negra hacia la izquierda abajo
         {
            if((tablero[i+N][j-N]=='b'|| tablero[i+N][j-N]=='B') && tab[i+N][j-N]==true)
@@ -348,6 +354,7 @@ int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la direc
                 cout<<"puede comer por derecha"<<endl;
             }
         }
+        */
     }
 }
 
