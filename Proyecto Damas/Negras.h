@@ -76,17 +76,15 @@ bool puedeMoverN(int i, int j,int N, bool corona) //comprueba que la ficha X,Y p
 int puedeComerN(int i, int j, int N, bool corona)//comprueba que la ficha X,Y puede capturar alguna ficha rival
 {
      if(corona==false)
-    { cout<<endl<<"corona "<<corona<<endl<<tablero[i-(2)][j-(2)]<<endl<<tablero[i-(1)][j-(1)]<<endl;
+    { 
        if(((tablero[i+1][j+1]=='b'|| tablero[i+1][j+1]=='B')&& tablero[i+(2)][j+(2)]=='+'))
        {//puede comer a las fichas Blancas
-           h='i';
            return 2;
        }
        else
        {
            if((tablero[i+1][j-1]=='b'|| tablero[i+1][j-1]=='B') && tablero[i+(2)][j-(2)]=='+')
            {
-               h='d';
                return 4;
            }
                    
@@ -99,7 +97,6 @@ int puedeComerN(int i, int j, int N, bool corona)//comprueba que la ficha X,Y pu
                (tablero[i+(m-1)][j-(m-1)]=='+'))
             {
                 Notr=m+1;
-                h='i'; v='b';
                 return 1;
              }
             else
@@ -108,7 +105,6 @@ int puedeComerN(int i, int j, int N, bool corona)//comprueba que la ficha X,Y pu
                    (tablero[i-(m-1)][j-(m-1)]=='+'))
                 {
 					Notr=m+1;
-                    h='i'; v='a';
                     return 2;
                 }
                 else 
@@ -117,7 +113,6 @@ int puedeComerN(int i, int j, int N, bool corona)//comprueba que la ficha X,Y pu
                        (tablero[i+(m-1)][j+(m-1)]=='+'))
                    {
 					   Notr=m+1;
-                       h='d'; v='b';
                        return 3;
                    }
                    else
@@ -126,7 +121,6 @@ int puedeComerN(int i, int j, int N, bool corona)//comprueba que la ficha X,Y pu
                        (tablero[i-(m-1)][j+(m-1)]=='+'))
                        {
 						   Notr=m+1;
-                           h='d'; v='a';
                            return 4;
                        }  
                    }
@@ -139,18 +133,6 @@ int puedeComerN(int i, int j, int N, bool corona)//comprueba que la ficha X,Y pu
 }
 int siMueveN(int i, int j,bool iz,int N,bool corona, bool ab)//determina direccion de movimiento de Negra
 {
-    cout<<"SI MUEVE NEGRA"<<endl;
-
-    if(corona==true)cout<<"corona: si"<<endl;
-    else cout<<"corona: no"<<endl;
-
-    if(iz==true)cout<<"direccion horizontal: izquierda"<<endl;
-    else cout<<"direccion: derecha"<<endl;
-
-    if(ab==true)cout<<"direccion vertical: abajo"<<endl;
-    else cout<<"direccion vertical: arriba"<<endl;
-
-    cout<<"posiciones:"<<N<<endl;
     if(corona==false)
     {
         if(iz==true)//puede desplazar Negra hacia la izquierda
@@ -192,19 +174,9 @@ int siMueveN(int i, int j,bool iz,int N,bool corona, bool ab)//determina direcci
 }
 int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la dirección de captura de Negra
 {
-    cout<<"SI COME NEGRA"<<endl;
+    
     bool aux=false;
-    if(corona==true)cout<<"corona: si"<<endl;
-    else cout<<"corona: no"<<endl;
-
-    if(iz==true)cout<<"direccion horizontal: izquierda"<<endl;
-    else cout<<"direccion: derecha"<<endl;
-
-    if(ab==true)cout<<"direccion vertical: abajo"<<endl;
-    else cout<<"direccion vertical: arriba"<<endl;
-    cout<<"posiciones:"<<N<<endl;
-    cout<<"i:"<<i<<endl;
-    cout<<"j:"<<j<<endl;
+  
      if(corona==false)
     {
         if(iz==true)//puede capturar Blanca hacia la izquierda
@@ -243,7 +215,6 @@ int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la direc
         {
            if((tablero[i-m][j-m]=='b'||tablero[i-m][j-m]=='B') && tablero[i-(m+1)][j-(m+1)]=='+')
            {
-			   cout<<endl<<"hola que tal soy sebastian--------------------------"<<endl;
 			   if((tablero[i-(m-1)][j-(m-1)]=='b'||tablero[i-(m-1)][j-(m-1)]=='B')||tablero[i-(N)][j-(N)]!='+')return 0;
 			   
 			   for(int w=1;w<N;w++)if(tablero[i-w][j-w]=='n')return 0;
@@ -267,8 +238,7 @@ int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la direc
         else if(iz==false && ab==false)//puede capturar Blanca hacia la derecha
         { 
 			if((tablero[i-m][j+m]=='b'||tablero[i-m][j+m]=='B') && tablero[i-(m+1)][j+(m+1)]=='+')
-           {
-			   cout<<endl<<"hola que tal soy sebastian - +   --------------------------"<<endl;
+           { 
 			   if((tablero[i-(m-1)][j+(m-1)]=='b'||tablero[i-(m-1)][j+(m-1)]=='B')||tablero[i-(N)][j+(N)]!='+')return 0;
                
                for(int w=1;w<N;w++)if(tablero[i-w][j+w]=='n')return 0;
@@ -292,8 +262,7 @@ int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la direc
         {
             if((tablero[i+m][j-m]=='b'||tablero[+m][j-m]=='B') && tablero[i+(m+1)][j-(m+1)]=='+')
            {
-			   cout<<endl<<"hola que tal soy sebastian----     +-     ----------------------"<<endl;
-			   if((tablero[i+(m-1)][j-(m-1)]=='b'||tablero[i+(m-1)][j-(m-1)]=='B')||tablero[i+(N)][j-(N)]!='+')return 0;
+			  if((tablero[i+(m-1)][j-(m-1)]=='b'||tablero[i+(m-1)][j-(m-1)]=='B')||tablero[i+(N)][j-(N)]!='+')return 0;
                
                for(int w=1;w<N;w++)if(tablero[i+w][j-w]=='n')return 0;
                
@@ -316,8 +285,7 @@ int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la direc
         {
 			if((tablero[i+m][j+m]=='b'||tablero[+m][j+m]=='B') && tablero[i+(m+1)][j+(m+1)]=='+')
            {
-			   cout<<endl<<"hola que ---------------------------------------------------"<<endl;
-			   if((tablero[i+(m-1)][j+(m-1)]=='b'||tablero[i+(m-1)][j+(m-1)]=='B')||tablero[i+(N)][j+(N)]!='+')return 0;
+			  if((tablero[i+(m-1)][j+(m-1)]=='b'||tablero[i+(m-1)][j+(m-1)]=='B')||tablero[i+(N)][j+(N)]!='+')return 0;
 				
 				for(int w=1;w<N;w++)if(tablero[i+w][j+w]=='n')return 0;
 
@@ -340,9 +308,7 @@ int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la direc
    }
 }
            if(aux==true){
-			   cout<<endl<<"---------puedecomerNNNNNNNN"<<puedeComerN(i,j,2,corona)<<endl;
-           if((puedeComerN(i,j,2,corona))==1){//+-
-			   cout<<endl<<"mas menos-----"<<endl;
+			   if((puedeComerN(i,j,2,corona))==1){//+-
 				   iz=true;
 				   ab=true;
 				   siComeN(i,j,iz,Notr,corona,ab);
@@ -356,14 +322,12 @@ int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la direc
 					   return 1;
 				   }else{
 					   if ((puedeComerN(i,j,2,corona))==3){//++
-						   cout<<endl<<"+++++++++++++++++++++++++++++++"<<endl;
 					   iz=false;
 					   ab=true;
-					   cout<<endl<<"+-+-+-+-+-+"<<siComeN(i,j,iz,Notr,corona,ab)<<endl;
+					   siComeN(i,j,iz,Notr,corona,ab);
 					   return 1;
 				   }else{
 					   if ((puedeComerN(i,j,2,corona))==4){//-+
-						   cout<<endl<<"----------------++++++++++++++++++++++++"<<endl;
 					   iz=false;
 					   ab=false;
 					   siComeN(i,j,iz,Notr,corona,ab);

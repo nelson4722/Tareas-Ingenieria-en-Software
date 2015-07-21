@@ -119,22 +119,9 @@ int main(){
         int i=0,j=0;
         crearlimite();//determina el limite del tablero
         llenar();//llena las fichas y cuadros de desplazamiento
-        tablero[1][1]='b';
-        tablero[0][0]='+';
-        tablero[6][2]='+';
-        tablero[9][9]='+';
-        tablero[6][4]='n';
-        //tablero[6][2]='n';
-        tablero[4][4]='n';
-        tablero[7][3]='+';
-        tablero[4][8]='n';
-        tablero[8][8]='n';
-        tablero[5][1]='n';
     	imprimir();//imprime el tablero
         while(true){//ciclo infinito, falta darle condicion de termino
-            cout<<"El valor de N es "<<N<<endl;
             B:
-            H:
         cout<<"ingrese posicion que desea mover y direccion de Blancos"<<endl;
     	cin>>jota>>i>>direccion;
         //i=iaux;
@@ -149,10 +136,8 @@ int main(){
             daux=diaux(diraux);
         }else N=1;
        
-                cout<<"el valor de siComeB es-----------main-------- "<<siComeB(i-1,j-1,dir,N,esCoronaB(i-1,j-1),daux)<<endl;
                 if(siComeB(i-1,j-1,dir,N,esCoronaB(i-1,j-1),daux)==1)//comprobar si puede capturar por izquierda
                 {
-                   cout<<"algooooooooooooooooooooooooooo-----------main-------- "<<i-1<<j-1<<endl;
                    siSopladitaB(i-1,j-1,N);
                    imprimir();
                 }
@@ -198,10 +183,9 @@ int main(){
         }
         else N=1;
         
-                cout<<"el valor de siComeN es-----------main-------- "<<endl;
+                
                 if(siComeN(i-1,j-1,dir,N,esCoronaN(i-1,j-1),daux)==1)//comprobar si puede capturar por izquierda
                 {
-                   cout<<"algooooooooooooooooooooooooooo-----------main-------- "<<endl;
                    siSopladitaN(i-1,j-1,N);
                    imprimir();
                 }
@@ -229,7 +213,7 @@ int main(){
 						goto L;
                        }
             
-              goto H;
+              goto B;
             }
         return 0;
 }
