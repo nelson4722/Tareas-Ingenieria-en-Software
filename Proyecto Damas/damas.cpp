@@ -124,15 +124,22 @@ int main(){
             B:
         cout<<"ingrese posicion que desea mover y direccion de Blancos"<<endl;
     	cin>>jota>>i>>direccion;
+    	if(direccion!='i' && direccion!='d'){cout<<endl<<"--Direccion invalida, intente nuevamente"<<endl;
+			goto B;
+		}
         //i=iaux;
         j=cambioL(jota);
     	dir=direc(direccion);//determina direccion con booleano
-        
-        cout<<"el i es "<<i<<" y j es "<<j<<endl;
+    	
         if(esCoronaB(i-1,j-1)==true)
         {
+			C:
             cout<<"ingrese direccion y cantidad de posiciones a mover"<<endl;
             cin>>diraux>>N;
+            if(diraux!='a'&& diraux!='b'){
+				cout<<endl<<"Direccion invalida, intente nuevamente"<<endl;
+				goto C;
+		}
             daux=diaux(diraux);
         }else N=1;
        
@@ -143,16 +150,16 @@ int main(){
                 }
                 else if(siComeB(i-1,j-1,dir,N,esCoronaB(i-1,j-1),daux)==2)//determina captura por derecha
                 {
-					
-				
                     if(siMueveB(i-1,j-1,dir,N,esCoronaB(i-1,j-1),daux)!=7)//comprobar si puede mover por izquierda
                     {
 						i=i-1;
                         j=j-1;
-                       moverBlanca(siMueveB(i,j,dir,N,esCoronaB(i,j),daux),i,j,N,esCoronaB(i,j));//mueve por izquierda
-                      
-                       siSopladitaB(i,j,N);
-                       imprimir();
+                        if(puedeComerB(i,j,N,esCoronaB(i,j))!=0)tablero[i][j]='+';
+						else{
+                            moverBlanca(siMueveB(i,j,dir,N,esCoronaB(i,j),daux),i,j,N);//mueve por izquierda
+							siSopladitaB(i,j,N);
+							}
+				    imprimir();
                     }
                     else{
 						system("cls");
@@ -172,13 +179,22 @@ int main(){
         L:
         cout<<"ingrese posicion que desea mover y direccion de Negros"<<endl;
     	cin>>jota>>i>>direccion;
+    	if(direccion!='i'&& direccion!='d'){cout<<endl<<"Direccion invalida, intente nuevamente"<<endl;
+			goto L;
+		}
         j=cambioL(jota);
         dir=direc(direccion);//determina direccion con booleano
+        
         cout<<"el i es "<<i<<" y j es "<<j<<endl;
         if(esCoronaN(i-1,j-1)==true)
         {
+			K:
             cout<<"ingrese direccion y cantidad de posiciones a mover"<<endl;
             cin>>diraux>>N;
+            if(diraux!='a'&&diraux!='b'){
+				cout<<endl<<"Direccion invalida, intente nuevamente"<<endl;
+				goto K;
+		}
             daux=diaux(diraux);
         }
         else N=1;
@@ -195,8 +211,11 @@ int main(){
                     {
 						i=i-1;
 						j=j-1;
-                       moverNegra(siMueveN(i,j,dir,N,esCoronaN(i,j),daux),i,j,N,esCoronaN(i,j));//mueve por izquierda
+						 if(puedeComerN(i,j,N,esCoronaN(i,j))!=0)tablero[i][j]='+';
+						 else{
+                       moverNegra(siMueveN(i,j,dir,N,esCoronaN(i,j),daux),i,j,N);//mueve por izquierda
                        siSopladitaN(i,j,N);
+				   }
                        imprimir();
                     }
                     else{
