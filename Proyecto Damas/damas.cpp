@@ -52,6 +52,16 @@ int cambioL (char j)//cambia letra de posición por un numero
             return numeros[i];
     }
 }
+char cambioP (int j)//cambia letra de posición por un numero
+{//utilización de letras para trabajar
+    int numeros[] = {1,2,3,4,5,6,7,8,9,10};
+    char letras[] = {'A','B','C','D','E','F','G','H','I','J'};
+    for(int i=0;i<10;i++)
+    {
+        if(j==numeros[i])
+            return letras[i];
+    }
+}
 
 void llenar(){//Crear el tablero de Damas
     for(int i = 0; i < T; i++)
@@ -119,6 +129,7 @@ int main(){
         int i=0,j=0;
         crearlimite();//determina el limite del tablero
         llenar();//llena las fichas y cuadros de desplazamiento
+        
     	imprimir();//imprime el tablero
         while(true){//ciclo infinito, falta darle condicion de termino
             B:
@@ -177,40 +188,57 @@ int main(){
                      
                                     
         L:
+        int B[3];
+        string lado;
+        maquina(B);
+        
         cout<<"ingrese posicion que desea mover y direccion de Negros"<<endl;
-    	cin>>jota>>i>>direccion;
-    	if(direccion!='i'&& direccion!='d'){cout<<endl<<"Direccion invalida, intente nuevamente"<<endl;
-			goto L;
+        i=B[0];
+        j=B[1];
+        bool dir;
+        if(B[2]==1){
+			dir=true;
+			lado="izquierda";
 		}
-        j=cambioL(jota);
-        dir=direc(direccion);//determina direccion con booleano
-        
-        cout<<"el i es "<<i<<" y j es "<<j<<endl;
-        if(esCoronaN(i-1,j-1)==true)
-        {
-			K:
-            cout<<"ingrese direccion y cantidad de posiciones a mover"<<endl;
-            cin>>diraux>>N;
-            if(diraux!='a'&&diraux!='b'){
-				cout<<endl<<"Direccion invalida, intente nuevamente"<<endl;
-				goto K;
+        else{
+			dir=false;
+			lado="derecha";
 		}
-            daux=diaux(diraux);
-        }
-        else N=1;
+		char d=cambioP(j+1);
+    	cout<<endl<<"Posicion "<<d<<", "<<i+1<<" movera hacia la "<<lado<<endl<<"Precione enter para continuar"<<endl;
+    	getchar();
+        getchar();
+    	//if(direccion!='i'&& direccion!='d'){cout<<endl<<"Direccion invalida, intente nuevamente"<<endl;
+			//goto L;
+		//}
+        //j=cambioL(jota);
+        //dir=direc(direccion);//determina direccion con booleano
         
-                
-                if(siComeN(i-1,j-1,dir,N,esCoronaN(i-1,j-1),daux)==1)//comprobar si puede capturar por izquierda
+        //if(esCoronaN(i-1,j-1)==true)
+        //{
+			//K:
+            //cout<<"ingrese direccion y cantidad de posiciones a mover"<<endl;
+            //cin>>diraux>>N;
+            //if(diraux!='a'&&diraux!='b'){
+				//cout<<endl<<"Direccion invalida, intente nuevamente"<<endl;
+				//goto K;
+		//}
+            //daux=diaux(diraux);
+        //}
+        //else 
+        int daux=1;
+        N=1;
+       
+                if(siComeN(i,j,dir,N,esCoronaN(i,j),daux)==1)//comprobar si puede capturar por izquierda
                 {
-                   siSopladitaN(i-1,j-1,N);
+                   siSopladitaN(i,j,N);
                    imprimir();
                 }
-                else if(siComeN(i-1,j-1,dir,N,esCoronaN(i-1,j-1),daux)==2)//determina captura por derecha
-                {
-                    if(siMueveN(i-1,j-1,dir,N,esCoronaN(i-1,j-1),daux)!=7)//comprobar si puede mover por izquierda
+                else if(siComeN(i,j,dir,N,esCoronaN(i,j),daux)==2)//determina captura por derecha
+                {cout<<endl<<"perro sarnoso"<<i<<endl;
+                    if(siMueveN(i,j,dir,N,esCoronaN(i,j),daux)!=7)//comprobar si puede mover por izquierda
                     {
-						i=i-1;
-						j=j-1;
+						
 						 if(puedeComerN(i,j,N,esCoronaN(i,j))!=0)tablero[i][j]='+';
 						 else{
                        moverNegra(siMueveN(i,j,dir,N,esCoronaN(i,j),daux),i,j,N);//mueve por izquierda
@@ -221,7 +249,7 @@ int main(){
                     else{
 						system("cls");
 						imprimir();
-					    cout<<endl<<"Movimiento invalido, intente nuevamente"<<endl;
+					    cout<<endl<<"Movimiento invalido, intente kk nuevamente"<<endl;
 						goto L;
 					}
                 }else

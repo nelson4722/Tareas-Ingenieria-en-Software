@@ -145,7 +145,7 @@ int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la direc
             {
 			   tablero[i][j]='+';
 			   tablero[i+1][j-1]='+';
-			   tablero[i+2][j-2]='b';	
+			   tablero[i+2][j-2]='n';	
 			   i=i+2;
 			   j=j-2;
 			   aux=true;
@@ -369,6 +369,130 @@ int siSopladitaN(int i,int j, int N)
     }
     return 0;
 }
+int maquina(int B[]){
+
+
+ 
+ bool ab=true;
+ int N=1;
+ int aux=0;
+    int valores[10][10] = {{5,0,5,0,5,0,5,0,5,0},
+                           {0,4,0,4,0,4,0,4,0,5},
+                           {5,0,3,0,3,0,3,0,4,0},
+                           {0,4,0,2,0,2,0,3,0,5},
+                           {5,0,3,0,1,0,2,0,4,0},
+                           {0,4,0,2,0,1,0,3,0,5},
+                           {5,0,3,0,2,0,2,0,4,0},
+                           {0,4,0,3,0,3,0,3,0,5},
+                           {5,0,4,0,4,0,4,0,4,0},
+                           {0,5,0,5,0,5,0,5,0,5}};
+                           
+                           B[0]=0;
+                           B[1]=0;
+                          
+                           
+for(int i=0;i<10;i++){
+for(int j=0;j<10;j++){
+		if(tablero[i][j]=='n' && (puedeComerN(i,j,N,false)==2||puedeComerN(i,j,N,false)==4))
+		{
+			B[0]=i;
+			B[1]=j;
+			if(puedeComerN(i,j,N,false)==2)B[2]=false;
+			else B[2]=true;
+			return *B;  
+	    }
+	 }
+}
+
+for(int i=0;i<10;i++){
+for(int j=0;j<10;j++){
+	if(i!=0){
+			  
+		  if(tablero[i][j]=='n' &&(siMueveN(i,j,false,N,false,ab)==1 && valores[i+1][j+1]==5) && aux==0)
+		  {
+			  B[0]=i;
+			  B[1]=j;		 
+			  B[2]=0;
+			  return *B;
+		  }
+		  if(tablero[i][j]=='n' && (siMueveN(i,j,true,N,false,ab)==2 && valores[i+1][j-1]==5) && aux==0)
+		  {
+			  B[0]=i;
+			  B[1]=j;
+			  B[2]=1;
+			  return *B;
+		  }
+		  if(tablero[i][j]=='n' && (siMueveN(i,j,false,N,false,ab)==1 && valores[i+1][j+1]==4)&& aux==1)
+		  {
+			  B[0]=i;
+			  B[1]=j;
+			  B[2]=0;
+			  return *B;
+		   }
+		  if(tablero[i][j]=='n' && (siMueveN(i,j,true,N,false,ab)==2 && valores[i+1][j-1]==4)&& aux==1)
+		  {
+			  B[0]=i;
+			  B[1]=j;
+			  B[2]=1;
+			  return *B;
+		  }
+		  if(tablero[i][j]=='n' && (siMueveN(i,j,false,N,false,ab)==1 && valores[i+1][j+1]==3)&& aux==2)
+		  {
+			  B[0]=i;
+			  B[1]=j;
+			  B[2]=0;
+			  return *B;
+		  }
+		  if(tablero[i][j]=='n' && (siMueveN(i,j,true,N,false,ab)==2 && valores[i+1][j-1]==3)&& aux==2)
+		  {
+			  B[0]=i;
+			  B[1]=j;
+			  B[2]=1;
+			  return *B;
+		  }        
+		  if(tablero[i][j]=='n' && (siMueveN(i,j,false,N,false,ab)==1 && valores[i+1][j+1]==2)&& aux==3)
+		  {
+			  B[0]=i;
+			  B[1]=j;
+			  B[2]=0;
+			  return *B;
+		  }
+		  if(tablero[i][j]=='n' && (siMueveN(i,j,true,N,false,ab)==2 && valores[i+1][j-1]==2)&&aux==3)
+		  {
+			  B[0]=i;
+			  B[1]=j;
+			  B[2]=1;
+			  return *B;
+		  }
+		  
+		  if(tablero[i][j]=='n' && (siMueveN(i,j,false,N,false,ab)==1 && valores[i+1][j+1]==1)&& aux==4)
+		  {
+			  B[0]=i;
+			  B[1]=j;
+			  B[2]=0;
+			  return *B;
+		   } 
+		  if(tablero[i][j]=='n' && (siMueveN(i,j,true,N,false,ab)==2 && valores[i+1][j-1]==1)&&aux==4)
+		  {
+			  B[0]=i;
+			  B[1]=j;
+			  B[2]=1;
+			  return *B;
+		  }
+		  if(i==9 && j==9)
+		  {
+			  aux++;
+			  cout<<endl<<aux<<endl;
+			  i=0; 
+			  j=0;
+		  }
+	  }
+  }
+  }
+		  
+}
+
+
 
 #endif	/* NEGRAS_H */
 
