@@ -11,9 +11,8 @@
 #include <cstdlib>
 #include <sstream>
 #include <ostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <string>
 #include <iostream>
 #define length(x) (sizeof(x)/sizeof(x[0]))//obtiene el tamaño de un arreglo
 using namespace std;
