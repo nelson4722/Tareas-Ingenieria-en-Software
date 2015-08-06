@@ -297,8 +297,9 @@ for(int j=0;j<10;j++){//comeCorona para retornar la mejor opcion de captura, tom
 for(int i=0;i<10;i++){//Busca algún peón que tenga opción de captura, para luego usar funciones tales como
 for(int j=0;j<10;j++){//comeCorona para retornar la mejor opcion de captura, tomando en cuenta que debe capturar   
 	                  //hacia el lado con mayor cantidad de opciones de captura    
-		if(tablero[i][j]=='n' && (puedeComerN(i,j,N,false)==3||puedeComerN(i,j,N,false)==1))
+		if(tablero[i][j]=='n' && (puedeComerN(i,j,N,false)==2||puedeComerN(i,j,N,false)==4))
 		{
+			cout<<"holaaaa"<<endl;
 				cont=0;
 				copia(taux,tablero);
 				
@@ -308,7 +309,7 @@ for(int j=0;j<10;j++){//comeCorona para retornar la mejor opcion de captura, tom
 				 copia(taux,tablero);
 				 auxPeon=comeCorona(i,j,true,Notr,false,true,taux);
 				 
-				 B[2]=true;
+				 B[2]=false;
 				 B[0]=i;
 				 B[1]=j;
 				 
@@ -324,7 +325,7 @@ for(int j=0;j<10;j++){//comeCorona para retornar la mejor opcion de captura, tom
 				 copia(taux,tablero);
 				 auxPeon=comeCorona(i,j,false,Notr,false,true,taux);
 				 
-				 B[2]=false;
+				 B[2]=true;
 				 B[0]=i;
 				 B[1]=j;
 			 }
