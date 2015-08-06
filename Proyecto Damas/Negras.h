@@ -23,10 +23,15 @@ bool esCoronaN(int i, int j)//determina si la pieza Negra es corona
         return false;
     }
 }
-int puedeComerN(int i, int j, int N, bool corona)//comprueba que la ficha X,Y puede capturar alguna ficha rival
-{
+char cambioN (int i)//cambia el numero de la posición por una letra
+{//ubicacion grafica del tablero
+	char letras[] = {'A','B','C','D','E','F','G','H','I','J'};
+    return letras[i-1];
+}
+int puedeComerN(int i, int j, int N, bool corona)//Función que permite verificar si en alguna direccion es posible comer
+{												 
      if(corona==false)
-    { 
+    {
        if(((tablero[i+1][j+1]=='b'|| tablero[i+1][j+1]=='B')&& tablero[i+(2)][j+(2)]=='+'))
        {//puede comer a las fichas Blancas
            return 2;
@@ -37,14 +42,14 @@ int puedeComerN(int i, int j, int N, bool corona)//comprueba que la ficha X,Y pu
            {
                return 4;
            }
-                   
+
        }
     }
     else
     {
-		for(int m=1;m<7;m++){ 
+		for(int m=1;m<7;m++){
             if(((tablero[i+m][j-m]=='b' || tablero[i+m][j-m]=='B')&&tablero[i+(m+1)][j-(m+1)]=='+')&&
-               (tablero[i+(m-1)][j-(m-1)]=='+'))
+               (tablero[i+(m-1)][j-(m-1)]=='+'||tablero[i+(m-1)][j-(m-1)]=='N'))
             {
                 Notr=m+1;
                 return 1;
@@ -52,15 +57,15 @@ int puedeComerN(int i, int j, int N, bool corona)//comprueba que la ficha X,Y pu
             else
             {
                 if(((tablero[i-m][j-m]=='b'||tablero[i-m][j-m]=='B')&&tablero[i-(m+1)][j-(m+1)]=='+')&&
-                   (tablero[i-(m-1)][j-(m-1)]=='+'))
+                   (tablero[i-(m-1)][j-(m-1)]=='+'||tablero[i-(m-1)][j-(m-1)]=='N'))
                 {
 					Notr=m+1;
                     return 2;
                 }
-                else 
+                else
                 {
                    if(((tablero[i+m][j+m]=='b'||tablero[i+m][j+m]=='B')&&tablero[i+(m+1)][j+(m+1)]=='+')&&
-                       (tablero[i+(m-1)][j+(m-1)]=='+'))
+                       (tablero[i+(m-1)][j+(m-1)]=='+'||tablero[i+(m-1)][j+(m-1)]=='N'))
                    {
 					   Notr=m+1;
                        return 3;
@@ -68,63 +73,66 @@ int puedeComerN(int i, int j, int N, bool corona)//comprueba que la ficha X,Y pu
                    else
                    {
                        if(((tablero[i-m][j+m]=='b'||tablero[i-m][j+m]=='B')&&tablero[i-(m+1)][j+(m+1)]=='+')&&
-                       (tablero[i-(m-1)][j+(m-1)]=='+'))
+                       (tablero[i-(m-1)][j+(m-1)]=='+'||tablero[i-(m-1)][j+(m-1)]=='N'))
                        {
 						   Notr=m+1;
                            return 4;
-                       }  
+                       }
                    }
                 }
             }
-		}            
-        
+		}
+
     }
     return 0;
 }
 int siMueveN(int i, int j,bool iz,int N,bool corona, bool ab)//determina direccion de movimiento de Negra
 {
+	int aux=0;
     if(corona==false)
     {
         if(iz==true)//puede desplazar Negra hacia la izquierda
         {
-           if(tablero[i+N][j-N]=='+' && tab[i+N][j-N]==true) return 2;
+           if(tablero[i+N][j-N]=='+' && tablero[i][j]=='n') return 2;
            return 7;
         }
         else if(iz==false)//puede desplazar Negra hacia la derecha
         {
-            if(tablero[i+N][j+N]=='+'&& tab[i+N][j+N]==true) return 1;
+            if(tablero[i+N][j+N]=='+'&& tablero[i][j]=='n') return 1;
             return 7;
         }
     } else
     {
+		for(int m=1;m<=N;m++){
         if(iz==true && ab==false)//puede desplazar Blanca hacia la izquierda abajo
         {
-           if(tablero[i-N][j-N]=='+' && tab[i-N][j-N]==true) return 3;
-           return 7;
+           if(tablero[i-m][j-m]=='+' && tablero[i][j]=='N')aux=3;
+           else return 7;
         }
 
         else if(iz==false && ab==false)//puede desplazar Blanca hacia la derecha abajo
         {
-            if(tablero[i-N][j+N]=='+'&& tab[i-N][j+N]==true)  return 4;
-            return 7;
+            if(tablero[i-N][j+N]=='+'&& tablero[i][j]=='N')aux=4;
+           else return 7;
         }
 
         else if(iz==true && ab==true)//puede desplazar Blanca hacia la izquierda arriba
         {
-           if(tablero[i+N][j-N]=='+' && tab[i+N][j-N]==true) return 5;
-           return 7;
-        }
-
+           if(tablero[i+N][j-N]=='+' && tablero[i][j]=='N')aux=5;
+           else return 7;
+		}
         else if(iz==false && ab==true)//puede desplazar Blanca hacia la derecha arriba
         {
-            if(tablero[i+N][j+N]=='+'&& tab[i+N][j+N]==true)  return 6;
-            return 7;
+            if(tablero[i+N][j+N]=='+'&& tablero[i][j]=='N')aux=6;
+           else return 7;
         }
+	}
+	return aux;
     }
 }
-int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la dirección de captura de Negra
-{   
-    bool aux=false; 
+int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//Función importante que la encargada de capturar piezas y ademas retorna 
+{									    	      			 //si es posible capturar o no, hace uso de recursividad para lograr saltos múltiples
+    bool aux=false;
      if(corona==false)
     {
         if(iz==false)//puede capturar Blanca hacia la izquierda
@@ -145,7 +153,7 @@ int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la direc
             {
 			   tablero[i][j]='+';
 			   tablero[i+1][j-1]='+';
-			   tablero[i+2][j-2]='n';	
+			   tablero[i+2][j-2]='n';
 			   i=i+2;
 			   j=j-2;
 			   aux=true;
@@ -155,46 +163,46 @@ int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la direc
     else
     {
 		for(int m = 1; m<N; m++){
-			
+
         if(iz==true && ab==false)//puede capturar Blanca hacia la izquierda
         {
            if((tablero[i-m][j-m]=='b'||tablero[i-m][j-m]=='B') && tablero[i-(m+1)][j-(m+1)]=='+')
            {
 			   if((tablero[i-(m-1)][j-(m-1)]=='b'||tablero[i-(m-1)][j-(m-1)]=='B')||tablero[i-(N)][j-(N)]!='+')return 0;
-			   
+
 			   for(int w=1;w<N;w++)if(tablero[i-w][j-w]=='n')return 0;
-			   
+
 			   for(int w=1;w<N;w++){
-				   
+
                    if(tablero[i][j]=='N' && (tablero[i-w][j-w]=='b'||tablero[i-w][j-w]=='B') && tablero[i-(w+1)][j-(w+1)]=='+'){
 				   tablero[i-w][j-w]='+';
                 }
 				}
-				
+
                 tablero[i-(N)][j-(N)]='N';
                 tablero[i][j]='+';
                 i=i-(N);
                 j=j-(N);
-                aux=true;  
-                m=N; 
+                aux=true;
+                m=N;
            }
-           
+
         }
         else if(iz==false && ab==false)//puede capturar Blanca hacia la derecha
-        { 
+        {
 			if((tablero[i-m][j+m]=='b'||tablero[i-m][j+m]=='B') && tablero[i-(m+1)][j+(m+1)]=='+')
-           { 
+           {
 			   if((tablero[i-(m-1)][j+(m-1)]=='b'||tablero[i-(m-1)][j+(m-1)]=='B')||tablero[i-(N)][j+(N)]!='+')return 0;
-               
+
                for(int w=1;w<N;w++)if(tablero[i-w][j+w]=='n')return 0;
-               
+
                for(int w=1;w<N;w++){
-				   
+
 				   if(tablero[i][j]=='N' && (tablero[i-w][j+w]=='b'||tablero[i-w][j+w]=='B') && tablero[i-(w+1)][j+(w+1)]=='+'){
 				   tablero[i-w][j+w]='+';
                   }
 			      }
-			      
+
 			    tablero[i-(N)][j+(N)]='N';
                 tablero[i][j]='+';
                 i=i-(N);
@@ -208,11 +216,11 @@ int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la direc
             if((tablero[i+m][j-m]=='b'||tablero[+m][j-m]=='B') && tablero[i+(m+1)][j-(m+1)]=='+')
            {
 			  if((tablero[i+(m-1)][j-(m-1)]=='b'||tablero[i+(m-1)][j-(m-1)]=='B')||tablero[i+(N)][j-(N)]!='+')return 0;
-               
+
                for(int w=1;w<N;w++)if(tablero[i+w][j-w]=='n')return 0;
-               
+
                for(int w=1;w<N;w++){
-				    
+
 					if(tablero[i][j]=='N' && (tablero[i+w][j-w]=='b'||tablero[i+w][j-w]=='B') && tablero[i+(w+1)][j-(w+1)]=='+'){
 				    tablero[i+w][j-w]='+';
                 }
@@ -230,16 +238,16 @@ int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la direc
 			if((tablero[i+m][j+m]=='b'||tablero[+m][j+m]=='B') && tablero[i+(m+1)][j+(m+1)]=='+')
            {
 			  if((tablero[i+(m-1)][j+(m-1)]=='b'||tablero[i+(m-1)][j+(m-1)]=='B')||tablero[i+(N)][j+(N)]!='+')return 0;
-				
+
 				for(int w=1;w<N;w++)if(tablero[i+w][j+w]=='n')return 0;
 
                for(int w=1;w<N;w++){
-				    
+
 					if(tablero[i][j]=='N' && (tablero[i+w][j+w]=='b'||tablero[i+w][j+w]=='B') && tablero[i+(w+1)][j+(w+1)]=='+'){
 					tablero[i+w][j+w]='+';
                 }
                 }
-                
+
                 tablero[i+(N)][j+(N)]='N';
                 tablero[i][j]='+';
                 i=i+(N);
@@ -283,13 +291,13 @@ int siComeN(int i, int j,bool iz, int N,bool corona,bool ab)//determina la direc
 	   }
    }
 }
-return 2;   
+return 2;
 }
 void moverNegra(int q,int &i,int &j,int N)//Accion de movimiento Negra
 {
     cout<<endl;
     cout<<endl;
-      
+
         if(q==1)//si puede mover Blanca hacia la izquierda
         {
                 tablero[i][j]='+';
@@ -332,23 +340,23 @@ void moverNegra(int q,int &i,int &j,int N)//Accion de movimiento Negra
                 tablero[i][j]='+';
                 tablero[i+N][j+N]='N';
                 i=i+N;
-                j=j+N;  
+                j=j+N;
         }
 }
 int siSopladitaN(int i,int j, int N)
-{   
+{
 	for(int m=0;m<10;m++)
     {
         for(int n=0;n<10;n++)
         {
 			 if((m!=i || n!=j) && (tablero[m][n]=='N')){
-				 
+
                  if(puedeComerN(m,n,N,true)!=0)
                  {
-					 cout<<endl<<"sopladita en posicion: "<<m<<", "<<n<<endl;
+					 cout<<endl<<"sopladita en posicion: "<<cambioN(n+1)<<", "<<m+1<<endl;
 					 tablero[m][n]='+';
 					 return 0;
-				 } 
+				 }
               }
         }
     }
@@ -357,10 +365,10 @@ int siSopladitaN(int i,int j, int N)
         for(int n=0;n<10;n++)
         {
 			 if((m!=i || n!=j) && (tablero[m][n]=='n')){
-				 
+
 				 if(puedeComerN(m,n,N,false)!=0)
-				 {	
-					 cout<<endl<<"sopladita en posicion: "<<m<<", "<<n<<endl;
+				 {
+					 cout<<endl<<"sopladita en posicion: "<<cambioN(n+1)<<", "<<m+1<<endl;
 					 tablero[m][n]='+';
 					 return 0;
                  }
@@ -369,130 +377,5 @@ int siSopladitaN(int i,int j, int N)
     }
     return 0;
 }
-int maquina(int B[]){
-
-
- 
- bool ab=true;
- int N=1;
- int aux=0;
-    int valores[10][10] = {{5,0,5,0,5,0,5,0,5,0},
-                           {0,4,0,4,0,4,0,4,0,5},
-                           {5,0,3,0,3,0,3,0,4,0},
-                           {0,4,0,2,0,2,0,3,0,5},
-                           {5,0,3,0,1,0,2,0,4,0},
-                           {0,4,0,2,0,1,0,3,0,5},
-                           {5,0,3,0,2,0,2,0,4,0},
-                           {0,4,0,3,0,3,0,3,0,5},
-                           {5,0,4,0,4,0,4,0,4,0},
-                           {0,5,0,5,0,5,0,5,0,5}};
-                           
-                           B[0]=0;
-                           B[1]=0;
-                          
-                           
-for(int i=0;i<10;i++){
-for(int j=0;j<10;j++){
-		if(tablero[i][j]=='n' && (puedeComerN(i,j,N,false)==2||puedeComerN(i,j,N,false)==4))
-		{
-			B[0]=i;
-			B[1]=j;
-			if(puedeComerN(i,j,N,false)==2)B[2]=false;
-			else B[2]=true;
-			return *B;  
-	    }
-	 }
-}
-
-for(int i=0;i<10;i++){
-for(int j=0;j<10;j++){
-	if(i!=0){
-			  
-		  if(tablero[i][j]=='n' &&(siMueveN(i,j,false,N,false,ab)==1 && valores[i+1][j+1]==5) && aux==0)
-		  {
-			  B[0]=i;
-			  B[1]=j;		 
-			  B[2]=0;
-			  return *B;
-		  }
-		  if(tablero[i][j]=='n' && (siMueveN(i,j,true,N,false,ab)==2 && valores[i+1][j-1]==5) && aux==0)
-		  {
-			  B[0]=i;
-			  B[1]=j;
-			  B[2]=1;
-			  return *B;
-		  }
-		  if(tablero[i][j]=='n' && (siMueveN(i,j,false,N,false,ab)==1 && valores[i+1][j+1]==4)&& aux==1)
-		  {
-			  B[0]=i;
-			  B[1]=j;
-			  B[2]=0;
-			  return *B;
-		   }
-		  if(tablero[i][j]=='n' && (siMueveN(i,j,true,N,false,ab)==2 && valores[i+1][j-1]==4)&& aux==1)
-		  {
-			  B[0]=i;
-			  B[1]=j;
-			  B[2]=1;
-			  return *B;
-		  }
-		  if(tablero[i][j]=='n' && (siMueveN(i,j,false,N,false,ab)==1 && valores[i+1][j+1]==3)&& aux==2)
-		  {
-			  B[0]=i;
-			  B[1]=j;
-			  B[2]=0;
-			  return *B;
-		  }
-		  if(tablero[i][j]=='n' && (siMueveN(i,j,true,N,false,ab)==2 && valores[i+1][j-1]==3)&& aux==2)
-		  {
-			  B[0]=i;
-			  B[1]=j;
-			  B[2]=1;
-			  return *B;
-		  }        
-		  if(tablero[i][j]=='n' && (siMueveN(i,j,false,N,false,ab)==1 && valores[i+1][j+1]==2)&& aux==3)
-		  {
-			  B[0]=i;
-			  B[1]=j;
-			  B[2]=0;
-			  return *B;
-		  }
-		  if(tablero[i][j]=='n' && (siMueveN(i,j,true,N,false,ab)==2 && valores[i+1][j-1]==2)&&aux==3)
-		  {
-			  B[0]=i;
-			  B[1]=j;
-			  B[2]=1;
-			  return *B;
-		  }
-		  
-		  if(tablero[i][j]=='n' && (siMueveN(i,j,false,N,false,ab)==1 && valores[i+1][j+1]==1)&& aux==4)
-		  {
-			  B[0]=i;
-			  B[1]=j;
-			  B[2]=0;
-			  return *B;
-		   } 
-		  if(tablero[i][j]=='n' && (siMueveN(i,j,true,N,false,ab)==2 && valores[i+1][j-1]==1)&&aux==4)
-		  {
-			  B[0]=i;
-			  B[1]=j;
-			  B[2]=1;
-			  return *B;
-		  }
-		  if(i==9 && j==9)
-		  {
-			  aux++;
-			  cout<<endl<<aux<<endl;
-			  i=0; 
-			  j=0;
-		  }
-	  }
-  }
-  }
-		  
-}
-
-
-
 #endif	/* NEGRAS_H */
 

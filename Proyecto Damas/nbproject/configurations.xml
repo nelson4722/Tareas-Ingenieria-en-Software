@@ -4,8 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>Blancas.h</itemPath>
-      <itemPath>Negras.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -14,7 +12,6 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>damas.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -27,7 +24,16 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>Blancas.h</itemPath>
+    <itemPath>Funciones.h</itemPath>
+    <itemPath>Makefile</itemPath>
+    <itemPath>Maquina.h</itemPath>
+    <itemPath>Negras.h</itemPath>
+    <itemPath>damas.cpp</itemPath>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>../../Escritorio/DAMAS SEMI FINAL</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug" type="1">
@@ -39,6 +45,12 @@
       <compileType>
       </compileType>
       <item path="Blancas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Funciones.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Makefile" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Maquina.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Negras.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -66,6 +78,12 @@
         </asmTool>
       </compileType>
       <item path="Blancas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Funciones.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Makefile" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Maquina.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Negras.h" ex="false" tool="3" flavor2="0">
       </item>

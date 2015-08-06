@@ -6,4 +6,4 @@ INSTRUCCIONES DE COMPILACION:
 	g++ -o <nombre de ejecutable> damas.cpp
 4.- ejecutar el programa de la siguiente manera
 	./Damas
-5.- JUGAR!!
+5.-JUGAR!!

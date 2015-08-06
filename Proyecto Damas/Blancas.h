@@ -3,8 +3,9 @@
 #include <cstdlib>
 #include <sstream>
 #include <ostream>
-#include <cstdio>
-#include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <iostream>
 using namespace std;
 #define T 10 //tamaño maximo del tablero
@@ -22,6 +23,11 @@ bool esCoronaB(int i, int j)//determina si la pieza Blanca es corona
     {
         return false;
     }
+}
+char cambioB (int i)//cambia el numero de la posición por una letra
+{//ubicacion grafica del tablero
+	char letras[] = {'A','B','C','D','E','F','G','H','I','J'};
+    return letras[i-1];
 }
 int puedeComerB(int i, int j, int N, bool corona)//comprueba que la ficha X,Y puede capturar alguna ficha rival
 {
@@ -44,7 +50,7 @@ int puedeComerB(int i, int j, int N, bool corona)//comprueba que la ficha X,Y pu
     {
 		for(int m=1;m<7;m++){ 
             if(((tablero[i+m][j-m]=='n' || tablero[i+m][j-m]=='N')&&tablero[i+(m+1)][j-(m+1)]=='+')&&
-            (tablero[i+(m-1)][j-(m-1)]=='+'))
+            (tablero[i+(m-1)][j-(m-1)]=='+'||tablero[i+(m-1)][j-(m-1)]=='B'))
             {
                 Notro=m+1;
                 return 1;
@@ -52,7 +58,7 @@ int puedeComerB(int i, int j, int N, bool corona)//comprueba que la ficha X,Y pu
             else
             {
                 if(((tablero[i-m][j-m]=='n'||tablero[i-m][j-m]=='N')&&tablero[i-(m+1)][j-(m+1)]=='+')&&
-                (tablero[i-(m-1)][j-(m-1)]=='+'))
+                (tablero[i-(m-1)][j-(m-1)]=='+'||tablero[i-(m-1)][j-(m-1)]=='B'))
                 {
 					Notro=m+1;
                     return 2;
@@ -61,7 +67,7 @@ int puedeComerB(int i, int j, int N, bool corona)//comprueba que la ficha X,Y pu
                 {
 				  
                    if(((tablero[i+m][j+m]=='n'||tablero[i+m][j+m]=='N')&&tablero[i+(m+1)][j+(m+1)]=='+')&&
-                   (tablero[i+(m-1)][j+(m-1)]=='+'))
+                   (tablero[i+(m-1)][j+(m-1)]=='+'||tablero[i+(m-1)][j+(m-1)]=='B'))
                    {
 					   Notro=m+1;
                        return 3;
@@ -69,7 +75,7 @@ int puedeComerB(int i, int j, int N, bool corona)//comprueba que la ficha X,Y pu
                    else
                    {
                        if(((tablero[i-m][j+m]=='n'||tablero[i-m][j+m]=='N')&&tablero[i-(m+1)][j+(m+1)]=='+')&&
-                       (tablero[i-(m-1)][j+(m-1)]=='+'))
+                       (tablero[i-(m-1)][j+(m-1)]=='+'||tablero[i-(m-1)][j+(m-1)]=='B'))
                        {
 						   Notro=m+1;
                            return 4;
@@ -84,44 +90,49 @@ int puedeComerB(int i, int j, int N, bool corona)//comprueba que la ficha X,Y pu
 }
 int siMueveB(int i, int j,bool iz, int N, bool corona,bool ab)//determina direccion de movimiento de Blanca
 {
+	int aux=0;
     if(corona==false)
     {
 		if(iz==true)//puede desplazar Blanca hacia la izquierda
         {
-           if(tablero[i-N][j-N]=='+' && tablero[i][j]=='b')return 1;
+           if(tablero[i-1][j-1]=='+' && tablero[i][j]=='b')return 1;
            return 7;
         }
         else if(iz==false)//puede desplazar Blanca hacia la derecha
         {
-            if(tablero[i-N][j+N]=='+' && tablero[i][j]=='b')return 2;
+            if(tablero[i-1][j+1]=='+' && tablero[i][j]=='b')return 2;
             return 7;
         }
     }
     else
     {
+		for(int m=1;m<=N;m++){
+			
         if(iz==true && ab==false)//puede desplazar Blanca hacia la izquierda abajo
         {
-           if(tablero[i-N][j-N]=='+' && tablero[i][j]=='B') return 3;
-           return 7;
+           if(tablero[i-m][j-m]=='+' && tablero[i][j]=='B') aux=3;
+           else return 7;
         }
 
         else if(iz==false && ab==false)//puede desplazar Blanca hacia la derecha abajo
         {
-            if(tablero[i-N][j+N]=='+' && tablero[i][j]=='B')  return 4;
-            return 7;
+            if(tablero[i-m][j+m]=='+' && tablero[i][j]=='B')aux=4;
+            else return 7;
         }
 
         else if(iz==true && ab==true)//puede desplazar Blanca hacia la izquierda arriba
         {
-           if(tablero[i+N][j-N]=='+' && tab[i+N][j-N]==true && tablero[i][j]=='B') return 5;
-           return 7;
+           if(tablero[i+m][j-m]=='+' && tablero[i][j]=='B')aux=5;
+           else return 7;
         }
 
         else if(iz==false && ab==true)//puede desplazar Blanca hacia la derecha arriba
         {
-            if(tablero[i+N][j+N]=='+'&& tab[i+N][j+N]==true && tablero[i][j]=='B')  return 6;
-            return 7;
+            if(tablero[i+m][j+m]=='+' && tablero[i][j]=='B')aux=6;
+            else return 7;
         }
+	}
+	return aux;
     }
 }
 
@@ -347,7 +358,7 @@ int siSopladitaB(int i, int j, int N)
 				 
                  if(puedeComerB(m,n,N,true)!=0)
                  {
-					 cout<<endl<<"sopladita en posicion: "<<m<<", "<<n<<endl;
+					 cout<<endl<<"sopladita en posicion: "<<cambioB(n+1)<<", "<<m+1<<endl;
 					 tablero[m][n]='+';
 					 return 0;
 			     } 
@@ -364,7 +375,7 @@ int siSopladitaB(int i, int j, int N)
 				 
 				 if(puedeComerB(m,n,N,false)!=0)
 				 {
-					 cout<<endl<<"sopladita en posicion: "<<m<<", "<<n<<endl;	
+					 cout<<endl<<"sopladita en posicion: "<<cambioB(n+1)<<", "<<m+1<<endl;	
 					 tablero[m][n]='+';
 					 return 0;
                  }
