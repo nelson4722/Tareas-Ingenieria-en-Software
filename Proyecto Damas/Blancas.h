@@ -3,9 +3,8 @@
 #include <cstdlib>
 #include <sstream>
 #include <ostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <string>
 #include <iostream>
 using namespace std;
 #define T 10 //tamaño maximo del tablero
